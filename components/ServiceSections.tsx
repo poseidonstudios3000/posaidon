@@ -1,13 +1,6 @@
 import React from 'react';
 import { Heart, MessageCircle, Send, MoreHorizontal } from 'lucide-react';
 
-interface CaseStudyProps {
-  title: string;
-  ask: string;
-  fix: string;
-  win: string;
-}
-
 interface FeedItem {
   id: number;
   imageUrl: string;
@@ -15,17 +8,18 @@ interface FeedItem {
   likes: string;
 }
 
-const CaseStudyBox: React.FC<CaseStudyProps> = ({ title, ask, fix, win }) => (
-  <div className="mt-6 p-4 md:p-6 bg-black/60 rounded-xl border border-white/10 font-mono text-xs md:text-sm relative overflow-hidden group/box hover:border-gadget-accent/30 transition-colors">
-    <div className="absolute top-0 left-0 w-full h-1 bg-gadget-accent/30"></div>
-    <div className="mb-2 md:mb-4 flex items-center gap-2">
-      <div className="w-2 h-2 bg-gadget-accent animate-pulse"></div>
-      <h4 className="font-bold text-gadget-accent uppercase tracking-widest text-[10px] md:text-xs">REAL WORLD: {title}</h4>
+const CapabilitiesTags: React.FC<{ tags: string[] }> = ({ tags }) => (
+  <div className="mt-8">
+    <div className="flex items-center gap-2 mb-4 opacity-70">
+       <div className="w-1.5 h-1.5 bg-gadget-accent rounded-full animate-pulse"></div>
+       <h4 className="font-mono text-[10px] font-bold text-gadget-label uppercase tracking-[0.2em]">System_Capabilities</h4>
     </div>
-    <div className="space-y-1 md:space-y-2 text-gray-400">
-      <p><span className="text-white font-bold uppercase mr-2">The Ask:</span> {ask}</p>
-      <p><span className="text-white font-bold uppercase mr-2">The Fix:</span> {fix}</p>
-      <p><span className="text-white font-bold uppercase mr-2">The Win:</span> {win}</p>
+    <div className="flex flex-wrap gap-3">
+      {tags.map((tag, i) => (
+        <span key={i} className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-[10px] md:text-xs font-mono text-gray-300 uppercase tracking-wide hover:text-gadget-accent hover:border-gadget-accent/40 hover:bg-gadget-accent/5 transition-all cursor-default">
+          {tag}
+        </span>
+      ))}
     </div>
   </div>
 );
@@ -95,9 +89,9 @@ const PhoneFeed: React.FC<{ items: FeedItem[] }> = ({ items }) => {
   );
 };
 
-const ServiceSection = ({ id, number, title, subtitle, description, caseStudy, feedItems, isEven }: any) => {
+const ServiceSection = ({ id, number, title, subtitle, subHeadline, description, tags, feedItems, isEven }: any) => {
   return (
-    <section id={id} className="h-screen w-full snap-start snap-always flex items-center justify-center relative z-10 overflow-hidden py-12 md:py-0">
+    <section id={id} className="h-screen w-full snap-start snap-always flex items-center justify-center relative z-10 overflow-hidden py-12 md:py-0 border-t border-white/5">
       <div className="container mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center justify-center gap-8 lg:gap-20 h-full`}>
           
@@ -108,21 +102,24 @@ const ServiceSection = ({ id, number, title, subtitle, description, caseStudy, f
                <div className="h-px w-12 bg-white/20"></div>
             </div>
             
-            <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tight mb-2 md:mb-4">
+            <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tight mb-2 md:mb-3">
               {title}
             </h3>
-            <p className="text-sm md:text-lg font-mono font-bold text-gadget-accent uppercase tracking-widest mb-4 md:mb-6">
+            <p className="text-sm md:text-lg font-mono font-bold text-gadget-accent uppercase tracking-widest mb-2">
               {subtitle}
             </p>
+            <p className="text-white md:text-xl font-medium mb-6 italic opacity-90">
+              {subHeadline}
+            </p>
 
-            <p className="text-gray-300 leading-relaxed text-sm md:text-lg mb-6 max-w-xl mx-auto lg:mx-0">
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base mb-2 max-w-xl mx-auto lg:mx-0 font-light">
               {description}
             </p>
 
-            <CaseStudyBox {...caseStudy} />
+            <CapabilitiesTags tags={tags} />
           </div>
 
-          {/* Visual Side: Phone Feed - Hidden on very small height screens if needed, but optimized to fit */}
+          {/* Visual Side: Phone Feed */}
           <div className="flex-none relative group hidden md:block lg:block">
             {/* Decorative Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[650px] bg-gadget-accent/5 blur-[50px] rounded-full pointer-events-none group-hover:bg-gadget-accent/10 transition-colors duration-700"></div>
@@ -142,72 +139,76 @@ export const Services: React.FC = () => {
       id: "service-content",
       number: "01",
       title: "Content",
-      subtitle: "Scroll-Stopping Visuals",
-      description: "We skip the travel, the permits, and the casting calls. Using generative video and inpainting, we create campaign-ready assets that look expensive but cost less.",
-      caseStudy: {
-        title: "The Impossible Location Shoot",
-        ask: "A luxury brand needed a global campaign in Tokyo, NYC, and Berlin.",
-        fix: "We virtually placed the product into hyper-realistic environments.",
-        win: "Campaign launched in 4 days vs. 2 months."
-      },
+      subtitle: "Hybrid Creative Engine",
+      subHeadline: "The efficiency of AI. The soul of a human.",
+      description: "Pure AI feels robotic. Pure human is too slow. We use a Hybrid AI Approach that combines generative speed with human strategy. From viral video concepts to high-converting ad creatives, we build assets designed to drive organic traffic and lower your cost-per-lead.",
+      tags: [
+        "Viral Image & Video Generation",
+        "AI Advertising Campaigns",
+        "Checklists & Guides",
+        "Format Optimization"
+      ],
       feedItems: [
-        { id: 1, imageUrl: "https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=1000&auto=format&fit=crop", caption: "Virtual production in Tokyo. No flights booked. 🇯🇵✨ #AIProduction #FutureOfFilm", likes: "2.4k" },
-        { id: 2, imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", caption: "Neo-Tokyo vibes generated in 30 mins. 🕹️", likes: "1.8k" },
-        { id: 3, imageUrl: "https://images.unsplash.com/photo-1614726365723-49faaa5bf3c6?q=80&w=1000&auto=format&fit=crop", caption: "Product placement in a zero-g environment. 🚀", likes: "3.1k" },
+        { id: 1, imageUrl: "https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=1000&auto=format&fit=crop", caption: "Hybrid workflow in action. Human strategy x AI execution. 🧠⚡ #CreativeEngine", likes: "2.4k" },
+        { id: 2, imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", caption: "Campaign assets generated and optimized in record time. 🚀", likes: "1.8k" },
+        { id: 3, imageUrl: "https://images.unsplash.com/photo-1614726365723-49faaa5bf3c6?q=80&w=1000&auto=format&fit=crop", caption: "Visuals that stop the scroll. Built for conversion.", likes: "3.1k" },
       ]
     },
     {
       id: "service-avatars",
       number: "02",
       title: "Avatars",
-      subtitle: "Clone Yourself (Literally)",
-      description: "Your leadership team is your best asset, but they can't be in ten meetings at once. We build photorealistic digital twins and voice clones for personalized updates.",
-      caseStudy: {
-        title: "The Multilingual CEO",
-        ask: "A CEO needed to send personalized updates to clients in the US, Germany, and the Middle East.",
-        fix: "AI translated and lip-synced the video into English, German, and Arabic.",
-        win: "One 5-minute session fueled a whole quarter of content."
-      },
+      subtitle: "Identity Scaling",
+      subHeadline: "Personal connection, automated.",
+      description: "Whether it’s duplicating your CEO for global communication or creating AI UGC Avatars for social proof, we remove the camera from the equation. We build digital personas that maintain consistency, allowing you to produce endless video content without endless filming days.",
+      tags: [
+        "AI UGC Avatars",
+        "Multilingual Lip-Sync",
+        "Executive Digital Twins",
+        "Instant Video Production"
+      ],
       feedItems: [
-        { id: 1, imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop", caption: "Just finished 40 meetings in 5 minutes. My digital twin is working overtime. 🤖💼 #AIClone", likes: "5.2k" },
-        { id: 2, imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop", caption: "Speaking German, Japanese, and French fluidly. I only speak English. 🌍", likes: "4.1k" },
-        { id: 3, imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop", caption: "Training video generated from text. No camera crew needed. 📹", likes: "1.9k" },
+        { id: 1, imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop", caption: "My digital twin handling the weekly update. 100% automated. 🤖✨ #IdentityScaling", likes: "5.2k" },
+        { id: 2, imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop", caption: "Fluent in 5 languages instantly. Breaking barriers. 🌍", likes: "4.1k" },
+        { id: 3, imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop", caption: "Consistent brand voice, zero studio time.", likes: "1.9k" },
       ]
     },
     {
       id: "service-seo",
       number: "03",
       title: "SEO / GEO",
-      subtitle: "Own the Answer",
-      description: "Old SEO is dying. Users are asking AI for answers. We structure your data so 'Answer Engines' cite you as the authority, not your competitors.",
-      caseStudy: {
-        title: "The Answer Engine Authority",
-        ask: "A niche agency wasn't showing up in AI search summaries.",
-        fix: "Rebuilt content hierarchy to be 'machine-readable' and entity-rich.",
-        win: "Moved from Page 2 to #1 cited source in AI answers."
-      },
+      subtitle: "Generative Authority",
+      subHeadline: "Rank in Search. Be Cited by AI.",
+      description: "We don't just chase Google rankings; we optimize for the \"Answer Engines\" (ChatGPT, Gemini, Perplexity). By implementing NLP (Natural Language Processing) and NER (Named Entity Recognition), we ensure your brand is understood by algorithms as the authoritative source in your niche.",
+      tags: [
+        "Generative Engine Optimization (GEO)",
+        "Niche Analysis & Citations",
+        "Statistical Data Enrichment",
+        "Long-Tail Keyword Strategy"
+      ],
       feedItems: [
-        { id: 1, imageUrl: "https://images.unsplash.com/photo-1558494949-efc52728101c?q=80&w=1000&auto=format&fit=crop", caption: "Structuring data for the Neural Web. Are you visible to the AIs? 🧠🌐 #SEO2.0", likes: "892" },
-        { id: 2, imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop", caption: "Graph databases are the new keywords. Connecting the dots. 🔗", likes: "1.2k" },
-        { id: 3, imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", caption: "Global entity recognition confirmed. 🌎", likes: "2.5k" },
+        { id: 1, imageUrl: "https://images.unsplash.com/photo-1558494949-efc52728101c?q=80&w=1000&auto=format&fit=crop", caption: "Optimizing for the Answer Engines. Are you being cited? 🧠🌐 #GEO", likes: "892" },
+        { id: 2, imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1000&auto=format&fit=crop", caption: "Structured data that algorithms love. 🔗", likes: "1.2k" },
+        { id: 3, imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", caption: "Dominate the new search landscape. 🌎", likes: "2.5k" },
       ]
     },
     {
       id: "service-custom",
       number: "04",
       title: "Custom",
-      subtitle: "Kill the Bottlenecks",
-      description: "Every business has that one manual task that eats up the budget. We build custom AI pipelines (ComfyUI workflows) to automate your specific creative drudgery.",
-      caseStudy: {
-        title: "The E-Commerce Asset Pipeline",
-        ask: "An e-comm brand needed lifestyle shots for 5,000+ SKUs.",
-        fix: "Built a custom pipeline to auto-composite products into on-brand scenes.",
-        win: "Catalog update finished in hours, not weeks."
-      },
+      subtitle: "Revenue Architecture",
+      subHeadline: "Systems that lower costs and increase repeats.",
+      description: "Traffic is useless if it doesn't convert. We redefine your CRM with AI to automate repeat sales and optimize your Conversion Rate (CRO). From direct lead generation focused on CPA (Cost Per Action) to custom workflows, we build the backend systems that turn attention into revenue.",
+      tags: [
+        "CRM AI Automation",
+        "CPA/CPL Marketing",
+        "Conversion Rate Optimization",
+        "Direct Lead Generation"
+      ],
       feedItems: [
-        { id: 1, imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop", caption: "ComfyUI node graph executing 5000 images per hour. Efficiency is beautiful. ⚙️⚡ #Automation", likes: "3.3k" },
-        { id: 2, imageUrl: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop", caption: "Python scripts doing the heavy lifting. 🐍", likes: "2.1k" },
-        { id: 3, imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop", caption: "Server racks humming. Your creative team is sleeping, the AI is working. 🌙", likes: "1.5k" },
+        { id: 1, imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop", caption: "Automated workflows driving revenue while you sleep. ⚙️⚡ #RevenueArch", likes: "3.3k" },
+        { id: 2, imageUrl: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop", caption: "Optimization protocols active. Efficiency increased by 300%. 📈", likes: "2.1k" },
+        { id: 3, imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop", caption: "Turning traffic into loyal customers automatically.", likes: "1.5k" },
       ]
     }
   ];

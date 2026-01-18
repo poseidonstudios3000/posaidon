@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { RealityCheck } from './components/RealityCheck';
 import { Services } from './components/ServiceSections';
 import { CallToAction } from './components/CallToAction';
 
@@ -11,7 +10,6 @@ const App: React.FC = () => {
       <Navbar />
       <main>
         <Hero showCircuitry={false} />
-        <RealityCheck />
         <Services />
         <CallToAction />
       </main>
