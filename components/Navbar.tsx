@@ -3,26 +3,37 @@ import { Instagram } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [navStates, setNavStates] = useState<Record<string, string>>({
-    Content: 'Content',
-    Avatars: 'Avatars',
-    'SEO/GEO': 'SEO/GEO',
-    Custom: 'Custom'
-  });
-
+  
   useEffect(() => {
+    // Listen to the main app container for scroll events instead of window
+    // because the app uses a full-height overflow container for snap scrolling.
+    const container = document.getElementById('app-container');
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (container) {
+        setScrolled(container.scrollTop > 20);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    container?.addEventListener('scroll', handleScroll);
+    return () => container?.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleNavClick = (key: string) => {
-    setNavStates(prev => ({ ...prev, [key]: 'Coming Soon' }));
-    setTimeout(() => {
-      setNavStates(prev => ({ ...prev, [key]: key }));
-    }, 2000);
+    // Map nav items to Section IDs
+    const sectionMap: Record<string, string> = {
+      'Content': 'service-content',
+      'Avatars': 'service-avatars',
+      'SEO/GEO': 'service-seo',
+      'Custom': 'service-custom'
+    };
+
+    const targetId = sectionMap[key];
+    if (targetId) {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const navItems = ['Content', 'Avatars', 'SEO/GEO', 'Custom'];
@@ -71,7 +82,7 @@ export const Navbar: React.FC = () => {
                onClick={() => handleNavClick(item)}
                className="hover:text-gadget-accent transition-colors focus:outline-none min-w-max md:min-w-[60px] text-center"
              >
-               {navStates[item]}
+               {item}
              </button>
            ))}
         </nav>

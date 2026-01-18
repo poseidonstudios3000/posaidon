@@ -60,7 +60,23 @@
       }
     </script>
     <style>
-      html { background: #0f1113; scroll-behavior: smooth; }
+      html, body, #root { 
+        height: 100%; 
+        width: 100%;
+        margin: 0;
+        overflow: hidden; /* Important: Disable body scroll so the App container handles snapping */
+        background: #0f1113; 
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
       
       /* Physical Bevels */
       .bevel-out {
@@ -106,26 +122,6 @@
         background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4999d?auto=format&fit=crop&q=80&w=2560');
       }
 
-      /* 2. Liquid Carbon (Smooth, oily, dark flow) */
-      .bg-liquid-carbon {
-        background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2560');
-      }
-
-      /* 3. Velvet Void (Dark, soft ripples) */
-      .bg-velvet-void {
-        background-image: url('https://images.unsplash.com/photo-1534293630113-d023c7270b24?auto=format&fit=crop&q=80&w=2560');
-      }
-
-      /* 4. Midnight Silk (Dark blue/black smooth gradients) */
-      .bg-midnight-silk {
-        background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=2560');
-      }
-
-      /* 5. Graphite Storm (Textured, smokey dark) */
-      .bg-graphite-storm {
-        background-image: url('https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&q=80&w=2560');
-      }
-
       .text-glow {
         text-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
       }
@@ -151,7 +147,7 @@
 }
 </script>
 </head>
-  <body class="antialiased text-gray-300 gadget-texture overflow-x-hidden dark">
+  <body class="antialiased text-gray-300 gadget-texture dark">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
