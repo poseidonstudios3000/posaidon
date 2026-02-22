@@ -46,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({ showCircuitry }) => {
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center pt-32 md:pt-40 pb-20 overflow-hidden">
+    <section className="relative w-full h-screen snap-start snap-always flex items-center justify-center overflow-hidden">
       {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute top-0 left-0 w-full h-px bg-gadget-accent"></div>
@@ -60,12 +60,12 @@ export const Hero: React.FC<HeroProps> = ({ showCircuitry }) => {
         </svg>
       )}
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="max-w-7xl">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 pt-16">
+        <div className="max-w-7xl mx-auto">
           {/* Agency Tag - Reduced Size */}
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bevel-in bg-black/40 mb-8 md:mb-10 backdrop-blur-sm border border-white/5">
             <div className="w-2 h-2 rounded-full bg-gadget-accent shadow-[0_0_12px_#39ff14] animate-pulse"></div>
-            <span className="text-[10px] md:text-sm font-mono font-black text-gadget-accent uppercase tracking-widest">AI Marketing Agency</span>
+            <span className="text-[10px] md:text-sm font-mono font-black text-gadget-accent uppercase tracking-widest">AI Performance Marketing Agency</span>
           </div>
 
           <h1 className="text-[12vw] md:text-[6vw] font-black leading-[1.1] text-white uppercase italic tracking-tighter mb-8 md:mb-12">
